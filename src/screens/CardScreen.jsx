@@ -3,13 +3,14 @@ import React from 'react'
 import PaymentCard from '../components/PaymentCard'
 import Header from '../components/Header'
 import { cardData } from '../config/dataConfig'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
 const CardScreen = () => {
   return (
     <ScrollView>
       <Header />
-      <Text style={{fontSize:26, fontFamily:'SF-Pro', color:'#171717', marginHorizontal:20}}>My Card</Text>
-      <View style={{margin:20,}}>
+      <Text style={styles.title}>My Card</Text>
+      <View style={styles.cardContainer}>
       {cardData.map((card, index) => (
           <PaymentCard
             key={index}
@@ -33,18 +34,31 @@ const CardScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  title:{
+    fontSize:wp('6%'), 
+    fontFamily:'SF-Pro', 
+    color:'#171717', 
+      marginHorizontal:wp('5%')
+  },
+  cardContainer:{
+    margin: wp('5%')
+  },
   button:{
-    width: '90%',
-    display:'flex',
+    width: wp('90%'),
+    display: 'flex',
     backgroundColor: '#87DCFB',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
-    borderRadius: 20,
-    marginHorizontal:"auto",
-    marginBottom:60,
+    padding: wp('3%'),
+    borderRadius: wp('5%'),
+    alignSelf: 'center',
+    marginBottom: hp('8%')
   },
-  buttonText:{color: '#171717', fontSize: 24, fontFamily:'SF-Pro'},
+  buttonText:{
+    color: '#171717',
+    fontSize: wp('6%'),
+    fontFamily: 'SF-Pro'
+  },
 })
 
 export default CardScreen

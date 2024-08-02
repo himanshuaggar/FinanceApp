@@ -41,7 +41,7 @@ export const cardData = [
         cardTypeLogo: require('../../assets/visacard.png'),
     },
     {
-        cardNumber: '4567 1234 5678 9012',
+        cardNumber: '4567 6854 5678 6012',
         cardHolderName: 'Jane Klark',
         expiryDate: '12/25',
         cardImage: require('../../assets/cardbg.jpg'),
@@ -51,6 +51,7 @@ export const cardData = [
 
 export const homeCardData = [
     {
+        id:1,
         flagImage: require('../../assets/united-states-flag-icon.webp'),
         currency: 'US Dollar',
         cardTypeImage: require('../../assets/visacard.png'),
@@ -59,28 +60,31 @@ export const homeCardData = [
         validThru: '05/29',
     },
     {
+        id:2,
         flagImage: require('../../assets/united-states-flag-icon.webp'),
         currency: 'US Dollar',
         cardTypeImage: require('../../assets/visacard.png'),
-        balance: '13,323.23',
-        accountNumber: '9492',
-        validThru: '05/29',
+        balance: '94,423.23',
+        accountNumber: '9292',
+        validThru: '08/26',
     },
     {
+        id:3,
         flagImage: require('../../assets/united-states-flag-icon.webp'),
         currency: 'US Dollar',
         cardTypeImage: require('../../assets/visacard.png'),
-        balance: '13,323.23',
-        accountNumber: '9492',
-        validThru: '05/29',
+        balance: '42,323.52',
+        accountNumber: '7622',
+        validThru: '09/29',
     },
     {
+        id:4,
         flagImage: require('../../assets/united-states-flag-icon.webp'),
         currency: 'US Dollar',
         cardTypeImage: require('../../assets/visacard.png'),
-        balance: '13,323.23',
-        accountNumber: '9492',
-        validThru: '05/29',
+        balance: '67,372.39',
+        accountNumber: '2734',
+        validThru: '08/26',
     },
 
 ]

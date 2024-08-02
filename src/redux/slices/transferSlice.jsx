@@ -27,8 +27,33 @@ const seedData = [
   },
 ];
 
+const cardData = [
+  {
+    cardNumber: '1253 5432 3521 3090',
+    cardHolderName: 'Sarah Muller',
+    expiryDate: '09/24',
+    cardImage: require('../../../assets/cardbg.jpg'),
+    cardTypeLogo: require('../../../assets/visacard.png'),
+  },
+  {
+    cardNumber: '4567 1234 5678 9012',
+    cardHolderName: 'John Doe',
+    expiryDate: '12/25',
+    cardImage: require('../../../assets/cardbg.jpg'),
+    cardTypeLogo: require('../../../assets/visacard.png'),
+  },
+  {
+    cardNumber: '4567 6854 5678 6012',
+    cardHolderName: 'Jane Klark',
+    expiryDate: '12/25',
+    cardImage: require('../../../assets/cardbg.jpg'),
+    cardTypeLogo: require('../../../assets/visacard.png'),
+  },
+];
+
 const initialState = {
   transfers: seedData,
+  selectedCard: null,
 };
 
 const transferSlice = createSlice({
@@ -38,8 +63,11 @@ const transferSlice = createSlice({
     addTransfer: (state, action) => {
       state.transfers.push(action.payload);
     },
+    selectCard: (state, action) => {
+      state.selectedCard = action.payload;
+    },
   },
 });
 
-export const {addTransfer} = transferSlice.actions;
+export const {addTransfer, selectCard} = transferSlice.actions;
 export default transferSlice.reducer;

@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Dimensions} from 'react-native';
 import {
   ArrowLeftIcon,
@@ -7,7 +7,8 @@ import {
   ChevronDownIcon,
 } from 'react-native-heroicons/outline';
 import {LineChart} from 'react-native-gifted-charts';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const {width, height} = Dimensions.get('window');
 
@@ -51,191 +52,105 @@ const ptData = [
   },
 ];
 
-const StatsScreen = () => {
+const monthNames = [
+  
+  'Oct',
+  'Nov',
+  'Dec',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+];
 
+const StatsScreen = () => {
+  const [selectedMonth, setSelectedMonth] = useState(
+    monthNames[new Date().getMonth()],
+  );
   const navigation = useNavigation();
 
+  const handleMonthPress = month => {
+    setSelectedMonth(month);
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeftIcon
-            size={30}
-            strokeWidth={2}
-            color="black"
-            style={{color: 'black'}}
-          />
+          <ArrowLeftIcon size={30} strokeWidth={2} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Statistic</Text>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('Stats')}
-        style={{
-          marginRight: 10,
-          shadowColor: '#000',
-          shadowOffset: {width: 0, height: 2},
-          shadowOpacity: 0.5,
-          shadowRadius: 4,
-          elevation: 2,
-        }}>
-        <View
-          style={{
-            width: width * 0.9,
-            height: height * 0.3,
-            paddingHorizontal: 10,
-            paddingVertical: 20,
-            justifyContent: 'space-between',
-            borderRadius: 20,
-            backgroundColor: 'white',
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'lightgray',
-                padding: 10,
-                borderRadius: 20,
-              }}>
+        style={styles.cardContainer}>
+        <View style={styles.cardInnerContainer}>
+          <View style={styles.cardHeader}>
+            <View style={styles.flagContainer}>
               <Image
                 source={require('../../assets/united-states-flag-icon.webp')}
-                style={{
-                  width: 25,
-                  height: 25,
-                  borderRadius: 999,
-                }}
-                resizeMode="cover"
+                style={styles.flagIcon}
               />
-              <Text
-                style={{marginLeft: 5, color: '#1f1f1f', fontWeight: 'bold'}}>
-                US Dollar
-              </Text>
+              <Text style={styles.currencyText}>US Dollar</Text>
             </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../../assets/visacard.png')}
-                style={{
-                  width: 50,
-                  height: 26,
-                }}
-                resizeMode="cover"
-              />
-            </View>
+            <Image
+              source={require('../../assets/visacard.png')}
+              style={styles.visaIcon}
+            />
           </View>
-
-          <View style={{rowGap: 10}} className="space-y-2">
-            <Text style={{color: 'lightgray'}}>Your Balance</Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'SF-Pro',
-                  fontSize: 30,
-                  color: 'black',
-                }}>
-                $13,323.23
-                {/* {cardNumber} */}
-              </Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#ffffff',
-                  opacity: 0.5,
-                  borderRadius: 999,
-                  padding: 10,
-                  marginHorizontal: 10,
-                }}>
-                <EyeIcon
-                  size={30}
-                  strokeWidth={2}
-                  color="lightgray"
-                  style={{color: 'lightgray'}}
-                />
+          <View style={styles.balanceContainer}>
+            <Text style={styles.balanceText}>Your Balance</Text>
+            <View style={styles.amountContainer}>
+              <Text style={styles.amountText}>$13,323.23</Text>
+              <TouchableOpacity style={styles.eyeIconContainer}>
+                <EyeIcon size={wp('8%')} strokeWidth={2} color="lightgray" />
               </TouchableOpacity>
             </View>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View className="space-y-2">
-              <Text
-                className="font-medium text-lg text-white"
-                style={{
-                  fontFamily: 'SF-Pro',
-                  color: 'lightgray',
-                }}>
-                Account Number
-              </Text>
-              <Text
-                className="font-medium text-lg text-white"
-                style={{
-                  fontFamily: 'SF-Pro',
-                  color: '#171717',
-                }}>
-                **** 9492
-              </Text>
+          <View style={styles.cardFooter}>
+            <View>
+              <Text style={styles.accountText}>Account Number</Text>
+              <Text style={styles.accountNumber}>**** 9492</Text>
             </View>
-            <View className="space-y-2">
-              <Text
-                className="font-medium text-lg text-white"
-                style={{
-                  fontFamily: 'SF-Pro',
-                  color: 'lightgray',
-                }}>
-                Valid Thru
-              </Text>
-              <Text
-                className="font-medium text-lg text-white"
-                style={{
-                  fontFamily: 'SF-Pro',
-                  color: '#171717',
-                }}>
-                05/29
-              </Text>
+            <View>
+              <Text style={styles.validText}>Valid Thru</Text>
+              <Text style={styles.validThru}>05/29</Text>
             </View>
           </View>
         </View>
       </TouchableOpacity>
 
-      <View style={styles.monthSelector}>
-        <Text style={styles.activeMonthText}>Oct</Text>
-        <Text style={styles.monthText}>Nov</Text>
-        <Text style={styles.monthText}>Dec</Text>
-        <Text style={styles.monthText}>Jan</Text>
-        <Text style={styles.monthText}>Feb</Text>
-        <Text style={styles.monthText}>Mar</Text>
-      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.monthScroll}>
+        {monthNames.map((month, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleMonthPress(month)}
+            style={[
+              styles.monthButton,
+              {
+                backgroundColor:
+                  month === selectedMonth ? '#87DCFB' : '#FFFFFF',
+              },
+            ]}>
+            <Text style={styles.monthText}>{month}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
       <View style={styles.chartContainer}>
         <View style={styles.chartHeadingContainer}>
           <Text style={styles.transactionText}>Transaction</Text>
-          <View style={styles.earningConatiner}>
+          <View style={styles.earningContainer}>
             <Text style={styles.earningsText}>Earnings</Text>
-            <ChevronDownIcon
-              size={20}
-              strokeWidth={2}
-              color="black"
-              style={{color: 'black'}}
-            />
+            <ChevronDownIcon size={20} strokeWidth={2} color="black" />
           </View>
         </View>
         <LineChart
@@ -269,49 +184,20 @@ const StatsScreen = () => {
             pointerLabelHeight: 160,
             activatePointersOnLongPress: true,
             autoAdjustPointerLabelPosition: false,
-            pointerLabelComponent: items => {
-              return (
-                <View
-                  style={{
-                    height: 120,
-                    width: 100,
-                    justifyContent: 'center',
-                    marginTop: -10,
-                    marginLeft: -40,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      fontSize: 14,
-                      marginBottom: 6,
-                      textAlign: 'center',
-                    }}>
-                    {items[0].date}
+            pointerLabelComponent: items => (
+              <View style={styles.pointerLabelContainer}>
+                <Text style={styles.pointerLabelText}>{items[0].date}</Text>
+                <View style={styles.pointerValueContainer}>
+                  <Text style={styles.pointerValueText}>
+                    {'$' + items[0].value + '.0'}
                   </Text>
-
-                  <View
-                    style={{
-                      paddingHorizontal: 14,
-                      paddingVertical: 6,
-                      borderRadius: 16,
-                      backgroundColor: 'white',
-                    }}>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: 'black',
-                      }}>
-                      {'$' + items[0].value + '.0'}
-                    </Text>
-                  </View>
                 </View>
-              );
-            },
+              </View>
+            ),
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -319,110 +205,123 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    padding: 20,
+    padding: wp('5%'),
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    fontFamily: 'SF-Pro',
-    color: 'black',
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
+    marginBottom: hp('2.5%'),
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: wp('6%'),
     fontWeight: 'bold',
-    marginLeft: 10,
-    color:'#171717',
+    marginLeft: wp('2.5%'),
+    color: '#171717',
   },
   cardContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
+    marginRight: wp('2.5%'),
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 2,
+  },
+  cardInnerContainer: {
+    width: wp('90%'),
+    height: hp('30%'),
+    paddingHorizontal: wp('2.5%'),
+    paddingVertical: hp('2.5%'),
+    justifyContent: 'space-between',
+    borderRadius: wp('5%'),
+    backgroundColor: 'white',
   },
   cardHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
+  },
+  flagContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
+    padding: wp('2.5%'),
+    borderRadius: wp('5%'),
   },
   flagIcon: {
-    width: 24,
-    height: 24,
+    width: wp('6.5%'),
+    height: hp('3.5%'),
+    borderRadius: 999,
   },
   currencyText: {
-    fontSize: 16,
-    marginLeft: 10,
-    flex: 1,
+    marginLeft: wp('1.25%'),
+    color: '#1f1f1f',
+    fontWeight: 'bold',
   },
   visaIcon: {
-    width: 40,
-    height: 20,
+    width: wp('16%'),
+    height: hp('4%'),
+  },
+  balanceContainer: {
+    rowGap: 10,
   },
   balanceText: {
-    fontSize: 14,
-    color: '#777',
+    color: 'lightgray',
+  },
+  amountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   amountText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 10,
+    fontFamily: 'SF-Pro',
+    fontSize: wp('7.5%'),
+    color: 'black',
   },
-  eyeIcon: {
-    width: 24,
-    height: 24,
-    alignSelf: 'flex-end',
+  eyeIconContainer: {
+    backgroundColor: '#ffffff',
+    opacity: 0.5,
+    borderRadius: 999,
+    padding: wp('2.5%'),
+    marginHorizontal: wp('2.5%'),
   },
   cardFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  accountText: {
+    fontFamily: 'SF-Pro',
+    color: 'lightgray',
+  },
   accountNumber: {
-    fontSize: 14,
-    color: '#777',
+    fontFamily: 'SF-Pro',
+    color: '#171717',
+  },
+  validText: {
+    fontFamily: 'SF-Pro',
+    color: 'lightgray',
   },
   validThru: {
-    fontSize: 14,
-    color: '#777',
+    fontFamily: 'SF-Pro',
+    color: '#171717',
   },
-  monthSelector: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 20,
-    borderWidth: 1,
-    padding: 20,
-    borderRadius: 999,
-    backgroundColor: '#ffffff',
+  monthScroll: {
+    marginVertical: hp('2.5%'),
+    backgroundColor:'#FFFFFF',
+    padding:wp('4%'),
+    borderRadius:30,
   },
-  activeMonthText: {
-    fontSize: 16,
-    color: '#000',
+  monthButton: {
     borderRadius: 999,
-    backgroundColor: '#87dcfb',
-    padding: 12,
-    marginHorizontal: 10,
+    paddingVertical: wp('3%'),
+    paddingHorizontal: wp('3%'),
+    marginHorizontal: wp('1%'),
   },
   monthText: {
-    fontSize: 16,
+    fontSize: wp('4%'),
     color: '#000',
-    borderRadius: 999,
-    padding: 12,
-    marginHorizontal: 10,
   },
   chartContainer: {
     backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: wp('5%'),
+    padding: wp('5%'),
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
@@ -430,33 +329,47 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   chartHeadingContainer: {
-    display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
   },
   transactionText: {
     color: '#171717',
-    fontSize: 18,
+    fontSize: wp('6%'),
     fontWeight: 'bold',
-    marginBottom: 10,
   },
-  earningConatiner: {
-    display: 'flex',
+  earningContainer: {
     flexDirection: 'row',
     backgroundColor: '#d3d3d3',
-    padding:5,
-    borderRadius:999,
-    paddingTop:5,
+    padding: wp('2%'),
+    borderRadius: 999,
   },
   earningsText: {
-    fontSize: 14,
+    fontSize: wp('4%'),
     color: '#777',
-    alignSelf: 'flex-end',
-    marginBottom: 10,
   },
-  chartStyle: {
-    borderRadius: 16,
+  pointerLabelContainer: {
+    height: hp('15%'),
+    width: wp('25%'),
+    justifyContent: 'center',
+    marginTop: hp('-1.25%'),
+    marginLeft: wp('-10%'),
+  },
+  pointerLabelText: {
+    color: 'black',
+    fontSize: wp('3.5%'),
+    marginBottom: hp('0.75%'),
+    textAlign: 'center',
+  },
+  pointerValueContainer: {
+    paddingHorizontal: wp('3.5%'),
+    paddingVertical: hp('0.75%'),
+    borderRadius: wp('4%'),
+    backgroundColor: 'white',
+  },
+  pointerValueText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
   },
 });
 

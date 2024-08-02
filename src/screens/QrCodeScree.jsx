@@ -20,7 +20,6 @@ const QRScannerScreen = () => {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: codes => {
-      // Update the state with the latest scanned data
       setLatestScannedData(codes[0].value);
       console.log(codes[0].value);
     },
